@@ -13,93 +13,119 @@
     />
 
     <title>Frontend Mentor | Weather app</title>
-
-    <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
-    <style>
-      .attribution {
-        font-size: 11px;
-        text-align: center;
-      }
-      .attribution a {
-        color: hsl(228, 45%, 44%);
-      }
-    </style>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
-    <header>
-      <img src="./assets/images/logo.svg" alt="Weather App Logo" class="logo" />
-      <button>Units</button>
-
+    <header class="header">
+      <img
+        src="./assets/images/logo.svg"
+        alt="Weather App Logo "
+        class="logo header__logo"
+      />
+      <button class="header__units">
+        <img src="./assets/images/icon-units.svg" alt="" />
+        Units
+      </button>
       <!-- Switch to Imperial/Metric
 
-  Temperature
+       Temperature
 
-  Celsius (°C)
-  Fahrenheit (°F)
+      Celsius (°C)
+      Fahrenheit (°F)
 
-  Wind Speed
+      Wind Speed
 
-  km/h
-  mph
+      km/h
+      mph
 
-  Precipitation
+      Precipitation
 
-  Millimeters (mm)
-  Inches (in) -->
+      Millimeters (mm)
+      Inches (in) -->
     </header>
-    <main>
-      <h1>How's the sky looking today?</h1>
 
-      <section>
-        <input type="text" placeholder="Search for a place..." />
-        <button>Search</button>
-      </section>
+    <main class="main">
+      <h1 class="main__title">How's the sky looking today?</h1>
 
-      <div>
-        <p>New York</p>
-        <p>Monday, Sept 22, 2025</p>
-        <p>20°</p>
-      </div>
+      <form class="search-box">
+        <input
+          type="text"
+          class="search-box__input"
+          placeholder="Search for a place..."
+        />
+        <button class="search-box__btn">Search</button>
+      </form>
 
-      <section class="indicators">
-        <div class="indicator temperature">
-          <!-- Insert temperature here -->
-          <p>Feels like</p>
-          <span>18°</span>
-        </div>
-        <div class="indicator temperature">
-          <!-- Insert humidity here -->
-          <p>Humidity</p>
-          <span>18°</span>
-        </div>
-        <div class="indicator temperature">
-          <!-- Insert wind here -->
-          <p>Wind</p>
-          <span>18°</span>
-        </div>
-        <div class="indicator temperature">
-          <!-- Insert precipitation here -->
-          <p>Precipitation</p>
-          <span>18°</span>
-        </div>
-      </section>
+      <div class="weather-grid">
+        <section class="current-weather">
+          <div class="current-weather__data">
+            <p class="current-weather__city">New York, USA</p>
+            <p class="current-weather__date">Monday, Sept 22, 2025</p>
+          </div>
+          <div class="current-weather__temp">20°</div>
+        </section>
 
-      <div>
-        <p>Daily forecast</p>
-        <!-- Insert daily forecast for the next 7 days here -->
-      </div>
+        <section class="indicators">
+          <div class="indicator">
+            <p class="indicator__label">Feels Like</p>
+            <span class="indicator__value">18°</span>
+          </div>
+          <div class="indicator">
+            <p class="indicator__label">Humidity</p>
+            <span class="indicator__value">46%</span>
+          </div>
+          <div class="indicator">
+            <p class="indicator__label">Wind</p>
+            <span class="indicator__value">14 km/h</span>
+          </div>
+          <div class="indicator">
+            <p class="indicator__label">Precipitation</p>
+            <span class="indicator__value">0 mm</span>
+          </div>
+        </section>
 
-      <div>
-        <p>Hourly forecast</p>
-        <!-- Insert hourly forecast for the selected day here (for 8 hours)-->
+        <section class="daily-forecast">
+          <h2 class="section-title">Daily forecast</h2>
+          <div class="forecast-cards">
+            <!-- 7 карточек с днями -->
+            <div class="forecast-card">
+              <p class="forecast-card__day">Tue</p>
+              <img
+                src="./assets/images/icon-rain.svg"
+                alt="rain"
+                class="forecast-card__icon"
+              />
+              <p class="forecast-card__temp">20° / 14°</p>
+            </div>
+            <!-- и так далее -->
+          </div>
+        </section>
+
+        <section class="hourly-forecast">
+          <h2 class="section-title">Hourly forecast</h2>
+          <div class="forecast-cards">
+            <!-- 8 карточек с часами -->
+            <div class="forecast-card">
+              <p class="forecast-card__time">3 PM</p>
+              <img
+                src="./assets/images/icon-cloud.svg"
+                alt="cloudy"
+                class="forecast-card__icon"
+              />
+              <p class="forecast-card__temp">20°</p>
+            </div>
+            <!-- и так далее -->
+          </div>
+        </section>
       </div>
     </main>
 
-    <div class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-      Coded by <a href="https://github.com/AleksPinchuk">Aleks Pinchuk</a>.
-    </div>
+    <footer class="footer">
+      <p class="attribution">
+        Challenge by
+        <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
+        >. Coded by <a href="https://github.com/AleksPinchuk">Aleks Pinchuk</a>.
+      </p>
+    </footer>
   </body>
 </html>
