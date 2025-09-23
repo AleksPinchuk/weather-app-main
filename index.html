@@ -12,7 +12,8 @@
       href="./assets/images/favicon-32x32.png"
     />
 
-    <title>Frontend Mentor | Weather app</title>
+    <title>Weather app</title>
+    <link rel="stylesheet" href="./reset.css" />
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
@@ -25,6 +26,7 @@
       <button class="header__units">
         <img src="./assets/images/icon-units.svg" alt="" />
         Units
+        <img src="./assets/images/icon-dropdown.svg" alt="" />
       </button>
       <!-- Switch to Imperial/Metric
 
@@ -62,7 +64,11 @@
             <p class="current-weather__city">New York, USA</p>
             <p class="current-weather__date">Monday, Sept 22, 2025</p>
           </div>
-          <div class="current-weather__temp">20°</div>
+          <div class="current-weather-group">
+            <img src="./assets/images/icon-sunny.webp" alt="" class="current-weather-image">
+            <div class="current-weather__temp">20°</div>
+          </div>
+          
         </section>
 
         <section class="indicators">
@@ -86,9 +92,9 @@
 
         <section class="daily-forecast">
           <h2 class="section-title">Daily forecast</h2>
-          <div class="forecast-cards">
+          <div class="daily-forecast-cards">
             <!-- 7 карточек с днями -->
-            <div class="forecast-card">
+            <div class="daily-forecast-card">
               <p class="forecast-card__day">Tue</p>
               <img
                 src="./assets/images/icon-rain.webp"
@@ -102,16 +108,22 @@
         </section>
 
         <section class="hourly-forecast">
-          <h2 class="section-title">Hourly forecast</h2>
-          <div class="forecast-cards">
+          <div class="section-group">
+            <h2 class="section-title">Hourly forecast</h2>
+            <button class="day-select">
+              What day
+              <img src="./assets/images/icon-dropdown.svg" alt="" />
+            </button>
+          </div>
+          <div class="hourly-forecast-cards">
             <!-- 8 карточек с часами -->
-            <div class="forecast-card">
-              <p class="forecast-card__time">3 PM</p>
+            <div class="hourly-forecast-card">
               <img
                 src="./assets/images/icon-fog.webp"
                 alt="cloudy"
                 class="forecast-card__icon"
               />
+              <p class="forecast-card__time">3 PM</p>
               <p class="forecast-card__temp">20°</p>
             </div>
             <!-- и так далее -->

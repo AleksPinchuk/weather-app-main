@@ -1,0 +1,58 @@
+/* Базовая настройка боксовой модели */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Сброс отступов у типографики и структурных элементов */
+body,
+h1, h2, h3, h4, h5, h6,
+p,
+ul, ol,
+figure,
+blockquote,
+dl, dd {
+  margin: 0;
+  padding: 0;
+}
+
+/* Убираем стандартные стили у списков */
+ul, ol {
+  list-style: none;
+}
+
+/* Наследуем шрифты для форм */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+/* Убираем рамки и фон у кнопок по умолчанию */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* Базовые настройки для body */
+body {
+  min-height: 100vh;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Изображения и медиа — адаптивные */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Таблицы без отступов */
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
