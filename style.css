@@ -1,9 +1,43 @@
+/* === Bricolage Grotesque (variable) === */
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
+    format("truetype");
+  font-weight: 100 900; /* поддержка от Thin до Black */
+  font-stretch: 75% 125%; /* можно сжимать/растягивать, если нужно */
+  font-style: normal;
+}
+
+/* === DM Sans (variable, обычный) === */
+@font-face {
+  font-family: "DM Sans";
+  src: url("./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900; /* поддерживает от Thin до Black */
+  font-style: normal;
+}
+
+/* === DM Sans (variable, курсив) === */
+@font-face {
+  font-family: "DM Sans";
+  src: url("./assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+}
+
 body {
   background-color: #02012c;
   color: #ffffff;
   margin: 0 auto;
-  font-family: "Inter", sans-serif;
+  font-family: "DM Sans", sans-serif; /* основной текст */
+  font-weight: 400;
   max-width: 1216px;
+}
+
+h1 {
+  font-family: "Bricolage Grotesque", sans-serif; /* заголовки */
+  font-weight: 700;
 }
 
 .header {
@@ -37,8 +71,8 @@ body {
 }
 
 .main__title {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 52px;
+  margin: 64px 0;
   text-align: center;
 }
 
@@ -48,11 +82,33 @@ body {
   margin-bottom: 30px;
 }
 
+.search-box__wrapper {
+  position: relative;
+  flex: 1; /* занимает всю доступную ширину */
+}
+
+.search-box__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  pointer-events: none; /* чтобы не мешала клику */
+}
+
 .search-box__input {
-  padding: 12px;
   border-radius: 8px;
   border: none;
   width: 300px;
+  background: #262540;
+  /* width: 100%; */
+  padding: 12px 12px 12px 40px; /* отступ под иконку */
+  font-size: 20px;
+}
+
+.search-box__input::placeholder {
+  color: #d4d3d9;
 }
 
 .search-box__btn {
@@ -62,6 +118,10 @@ body {
   padding: 12px 20px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.search-box__btn:hover {
+  background: #2b1b9c;
 }
 
 .weather-grid {
@@ -76,7 +136,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: linear-gradient(135deg, #4b63ff, #674bff);
+  background: url(./assets/images/bg-today-large.svg);
   border-radius: 16px;
   padding: 20px;
   text-align: center;
@@ -93,6 +153,7 @@ body {
 .current-weather-image {
   width: 120px;
   height: 120px;
+  pointer-events: none;
 }
 
 .current-weather__data {
@@ -117,24 +178,26 @@ body {
   gap: 20px;
   grid-column: 1;
   width: auto;
-  height: 116px;
+  height: 118px;
 }
 
 .indicator {
   background: #2e2d5b;
   border-radius: 12px;
-  padding: 10px 20px;
+  padding: 20px 20px;
   width: 100%;
 }
 
 .indicator__label {
-  font-size: 14px;
-  margin-bottom: 5px;
+  font-size: 20px;
+  margin-bottom: 24px;
+  height: 20px;
 }
 
 .indicator__value {
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 32px;
+  font-weight: lighter;
+  height: 32px;
 }
 
 .daily-forecast {
@@ -148,6 +211,13 @@ body {
   display: flex;
   gap: 15px;
   overflow-x: auto; /* для скролла на мобильных */
+}
+
+.forecast-card-temperature {
+  display: flex;
+  justify-content: space-between; /* равномерно разводит элементы */
+  align-items: center; 
+  width: 100%; /* или фиксированная ширина, если нужно */
 }
 
 .hourly-forecast {
@@ -194,9 +264,10 @@ body {
   padding: 15px;
   text-align: center;
   width: 100%;
-  height: 135px;
+  height: 165px;
   display: flex;
   flex-direction: column;
+  gap: 18px;
   align-items: center;
 }
 
@@ -208,7 +279,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
+  height: 60px;
 }
 
 .forecast-card__icon {

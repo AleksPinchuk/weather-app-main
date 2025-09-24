@@ -50,11 +50,19 @@
       <h1 class="main__title">How's the sky looking today?</h1>
 
       <form class="search-box">
-        <input
-          type="text"
-          class="search-box__input"
-          placeholder="Search for a place..."
-        />
+        <div class="search-box__wrapper">
+          <img
+            src="./assets/images/icon-search.svg"
+            alt="search"
+            class="search-box__icon"
+          />
+          <input
+            name="search"
+            type="text"
+            class="search-box__input"
+            placeholder="Search for a place..."
+          />
+        </div>
         <button class="search-box__btn">Search</button>
       </form>
 
@@ -65,10 +73,13 @@
             <p class="current-weather__date">Monday, Sept 22, 2025</p>
           </div>
           <div class="current-weather-group">
-            <img src="./assets/images/icon-sunny.webp" alt="" class="current-weather-image">
+            <img
+              src="./assets/images/icon-sunny.webp"
+              alt=""
+              class="current-weather-image"
+            />
             <div class="current-weather__temp">20°</div>
           </div>
-          
         </section>
 
         <section class="indicators">
@@ -101,7 +112,10 @@
                 alt="rain"
                 class="forecast-card__icon"
               />
-              <p class="forecast-card__temp">20° / 14°</p>
+              <div class="forecast-card-temperature">
+                <p class="forecast-card__temp">20°</p>
+                <p class="forecast-card__temp-feel">14°</p>
+              </div>
             </div>
             <!-- и так далее -->
           </div>
