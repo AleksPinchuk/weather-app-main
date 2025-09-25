@@ -29,10 +29,11 @@
 body {
   background-color: #02012c;
   color: #ffffff;
-  margin: 0 auto;
-  font-family: "DM Sans", sans-serif; /* основной текст */
+  font-family: "DM Sans", sans-serif;
   font-weight: 400;
-  max-width: 1216px;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 7vw, 112px);
 }
 
 h1 {
@@ -79,7 +80,7 @@ h1 {
 .search-box {
   display: flex;
   gap: 10px;
-  margin-bottom: 30px;
+  margin-bottom: 45px;
 }
 
 .search-box__wrapper {
@@ -136,7 +137,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: url(./assets/images/bg-today-large.svg);
+  background: url(./assets/images/bg-today-large.svg) no-repeat;
   border-radius: 16px;
   padding: 20px;
   text-align: center;
@@ -148,6 +149,7 @@ h1 {
 .current-weather-group {
   display: flex;
   align-items: center;
+  gap: 20px;
 }
 
 .current-weather-image {
@@ -175,7 +177,7 @@ h1 {
 
 .indicators {
   display: flex;
-  gap: 20px;
+  gap: 24px;
   grid-column: 1;
   width: auto;
   height: 118px;
@@ -189,22 +191,28 @@ h1 {
 }
 
 .indicator__label {
-  font-size: 20px;
+  font-size: clamp(14px, 1.75vw, 20px);
   margin-bottom: 24px;
   height: 20px;
+  /* overflow: hidden; */
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .indicator__value {
-  font-size: 32px;
+  font-size: clamp(16px, 5vw, 32px);
   font-weight: lighter;
   height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .daily-forecast {
   width: 100%;
   max-width: 800px;
   grid-column: 1;
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 .daily-forecast-cards {
@@ -216,7 +224,7 @@ h1 {
 .forecast-card-temperature {
   display: flex;
   justify-content: space-between; /* равномерно разводит элементы */
-  align-items: center; 
+  align-items: center;
   width: 100%; /* или фиксированная ширина, если нужно */
 }
 
@@ -240,14 +248,15 @@ h1 {
 }
 
 .day-select {
+  font-size: 16px;
   background: #2e2d5b;
   color: #fff;
   border: none;
   border-radius: 8px;
-  padding: 6px 15px;
+  padding: 6px 16px;
   cursor: pointer;
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .hourly-forecast-cards {
@@ -277,9 +286,13 @@ h1 {
   padding: 15px;
   text-align: center;
   display: flex;
-  justify-content: space-between;
+  gap: 8px;
   align-items: center;
   height: 60px;
+}
+
+.forecast-card__time {
+  margin-right: auto;
 }
 
 .forecast-card__icon {
@@ -288,21 +301,155 @@ h1 {
 }
 
 .section-title {
-  font-size: 24px;
+  font-size: clamp(14px, 1.55vw, 20px);
+}
+
+.daily-forecast .section-title {
+  padding-bottom: 20px;
 }
 
 .footer {
   text-align: center;
-  padding: 20px;
+  padding: 40px 0;
   font-size: 12px;
   color: #aaa;
 }
 
 .attribution {
-  font-size: 11px;
+  font-size: 16px;
   text-align: center;
 }
 
 .attribution a {
   color: hsl(228, 45%, 44%);
+}
+
+@media (max-width: 1024px) {
+  body {
+    max-width: 768px;
+    padding: 0 clamp(16px, 7vw, 24px);
+  }
+
+  .main__title {
+    margin: 48px 0;
+  }
+
+  .weather-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hourly-forecast {
+    grid-column: 1;
+    grid-row: auto;
+    overflow-x: auto;
+  }
+
+  /* .hourly-forecast-cards {
+    flex-direction: row;
+    height: auto;
+  }
+
+  .indicators {
+    flex-wrap: wrap;
+    height: auto;
+  }
+
+  .indicator {
+    flex: 1 1 calc(50% - 20px);
+  } */
+}
+
+@media (max-width: 680px) {
+  body {
+    width: max(75%, 375px);
+    padding: 0 clamp(10px, 7vw, 16px);
+  }
+
+  .current-weather {
+    flex-direction: column;
+  }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .indicators {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+    grid-template-rows: repeat(2, auto); /* 2 строки */
+    grid-column: 1;
+    width: auto;
+    height: auto; /* убираем фиксированную высоту */
+  }
+
+  .daily-forecast-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 колонки */
+    grid-template-rows: repeat(3, auto); /* 2 строки */
+    grid-column: 1;
+    width: auto;
+    height: auto; /* убираем фиксированную высоту */
+  }
+  /* .header {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .main__title {
+    font-size: 28px;
+    margin: 30px 0;
+  }
+
+  .search-box {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .search-box__input {
+    width: 100%;
+  }
+
+  .search-box__btn {
+    width: 100%;
+  }
+
+  .current-weather {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+  }
+
+  .current-weather__temp {
+    font-size: 72px;
+  }
+
+  .indicators {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .daily-forecast-cards {
+    gap: 10px;
+  }
+
+  .daily-forecast-card {
+    min-width: 120px; 
+    flex-shrink: 0;
+  }
+
+  .hourly-forecast {
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .hourly-forecast-card {
+    width: 100%;
+    justify-content: space-between;
+  } */
+}
+
+@media (max-width: 380px) {
+  .current-weather {
+    background: url(./assets/images/bg-today-small.svg) no-repeat;
+  }
 }
