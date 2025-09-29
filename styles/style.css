@@ -1,7 +1,7 @@
 /* === Bricolage Grotesque (variable) === */
 @font-face {
   font-family: "Bricolage Grotesque";
-  src: url("./assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
+  src: url("../assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf")
     format("truetype");
   font-weight: 100 900; /* поддержка от Thin до Black */
   font-stretch: 75% 125%; /* можно сжимать/растягивать, если нужно */
@@ -11,7 +11,7 @@
 /* === DM Sans (variable, обычный) === */
 @font-face {
   font-family: "DM Sans";
-  src: url("./assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
+  src: url("../assets/fonts/DM_Sans/DMSans-VariableFont_opsz,wght.ttf")
     format("truetype");
   font-weight: 100 900; /* поддерживает от Thin до Black */
   font-style: normal;
@@ -20,7 +20,7 @@
 /* === DM Sans (variable, курсив) === */
 @font-face {
   font-family: "DM Sans";
-  src: url("./assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
+  src: url("../assets/fonts/DM_Sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
     format("truetype");
   font-weight: 100 900;
   font-style: italic;
@@ -103,7 +103,6 @@ h1 {
   border: none;
   width: 300px;
   background: #262540;
-  /* width: 100%; */
   padding: 12px 12px 12px 40px; /* отступ под иконку */
   font-size: 20px;
 }
@@ -137,7 +136,7 @@ h1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: url(./assets/images/bg-today-large.svg) no-repeat;
+  background: url(../assets/images/bg-today-large.svg) no-repeat;
   border-radius: 16px;
   padding: 20px;
   text-align: center;
@@ -194,7 +193,6 @@ h1 {
   font-size: clamp(14px, 1.75vw, 20px);
   margin-bottom: 24px;
   height: 20px;
-  /* overflow: hidden; */
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -344,19 +342,13 @@ h1 {
     overflow-x: auto;
   }
 
-  /* .hourly-forecast-cards {
-    flex-direction: row;
-    height: auto;
+  .search-box {
+    width: 100%;
   }
 
-  .indicators {
-    flex-wrap: wrap;
-    height: auto;
+  .search-box__input {
+    width: 100%;
   }
-
-  .indicator {
-    flex: 1 1 calc(50% - 20px);
-  } */
 }
 
 @media (max-width: 680px) {
@@ -390,66 +382,10 @@ h1 {
     width: auto;
     height: auto; /* убираем фиксированную высоту */
   }
-  /* .header {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .main__title {
-    font-size: 28px;
-    margin: 30px 0;
-  }
-
-  .search-box {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .search-box__input {
-    width: 100%;
-  }
-
-  .search-box__btn {
-    width: 100%;
-  }
-
-  .current-weather {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-  }
-
-  .current-weather__temp {
-    font-size: 72px;
-  }
-
-  .indicators {
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .daily-forecast-cards {
-    gap: 10px;
-  }
-
-  .daily-forecast-card {
-    min-width: 120px; 
-    flex-shrink: 0;
-  }
-
-  .hourly-forecast {
-    flex-direction: column;
-    padding: 16px;
-  }
-
-  .hourly-forecast-card {
-    width: 100%;
-    justify-content: space-between;
-  } */
 }
 
 @media (max-width: 380px) {
   .current-weather {
-    background: url(./assets/images/bg-today-small.svg) no-repeat;
+    background: url(../assets/images/bg-today-small.svg) no-repeat;
   }
 }
