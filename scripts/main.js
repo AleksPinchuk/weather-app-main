@@ -124,10 +124,21 @@ async function renderCurrentWeather(city) {
   }
 }
 
+
+
+// Нужно будет связать инпунт и рендер погоды
+renderCurrentWeather("St Petersburg").then(({ location, current }) => {
+  console.log("Локация:", location);
+  console.log("Погода:", current);
+  renderDailyForecast(location);
+  renderHourlyForecast(location, dayjs().format('YYYY-MM-DD'));
+});
+
 // Нужно будет связать инпунт и рендер погоды
 renderCurrentWeather("Moscow").then(({ location, current }) => {
   console.log("Локация:", location);
   console.log("Погода:", current);
-  renderDailyForecast(location)
+  renderDailyForecast(location);
+  renderHourlyForecast(location, dayjs().format('YYYY-MM-DD'));
 });
 
