@@ -5,7 +5,7 @@ import { renderDailyForecast } from './dailyForecast.js'
 import { renderHourlyForecast } from './hourlyForecast.js'
 
 // Получаем ссылку на иконку погоды
-function getWeatherImage(weathercode) {
+export function getWeatherImage(weathercode) {
   switch (weathercode) {
     // ☀️ Ясно
     case 0:
@@ -66,9 +66,6 @@ function getWeatherImage(weathercode) {
   }
 }
 
-
-
-
 async function renderCurrentWeather(city) {
   try {
     // 1. Ищем координаты города
@@ -128,8 +125,9 @@ async function renderCurrentWeather(city) {
 }
 
 // Нужно будет связать инпунт и рендер погоды
-renderCurrentWeather("Nice").then(({ location, current }) => {
+renderCurrentWeather("Moscow").then(({ location, current }) => {
   console.log("Локация:", location);
   console.log("Погода:", current);
+  renderDailyForecast(location)
 });
 
