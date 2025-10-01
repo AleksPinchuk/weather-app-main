@@ -33,7 +33,7 @@
     <main class="main">
       <h1 class="main__title">How's the sky looking today?</h1>
 
-      <form class="search-box">
+      <form class="search-box" id="search-form">
         <div class="search-box__wrapper">
           <img
             src="./assets/images/icon-search.svg"
@@ -44,11 +44,14 @@
             name="search"
             type="text"
             class="search-box__input"
+            id="city-input"
             placeholder="Search for a place..."
           />
         </div>
-        <button class="search-box__btn">Search</button>
+        <button class="search-box__btn" type="submit">Search</button>
       </form>
+
+      <div id="error"></div>
 
       <div class="weather-grid">
         <section class="current-weather">
@@ -81,7 +84,7 @@
           </div>
           <div class="indicator">
             <p class="indicator__label">Precipitation</p>
-            <span class="indicator__value  precipitation">0 mm</span>
+            <span class="indicator__value precipitation">0 mm</span>
           </div>
         </section>
 
@@ -109,7 +112,7 @@
           <div class="section-group">
             <h2 class="section-title">Hourly forecast</h2>
             <button class="day-select">
-              Tuesday
+              <span class="day-label">Tuesday</span>
               <img src="./assets/images/icon-dropdown.svg" alt="" />
             </button>
           </div>
@@ -134,7 +137,8 @@
       <p class="attribution">
         Challenge by
         <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a
-        >. Coded by <a href="https://github.com/AleksPinchuk">Aleksandr Pinchuk</a>.
+        >. Coded by
+        <a href="https://github.com/AleksPinchuk">Aleksandr Pinchuk</a>.
       </p>
     </footer>
 

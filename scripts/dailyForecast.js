@@ -1,6 +1,5 @@
-import { getDailyForecast } from './api.js'
+import { getDailyForecast, getWeatherImage} from './api.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import {getWeatherImage} from './main.js'
 
 export async function renderDailyForecast(location) {
 

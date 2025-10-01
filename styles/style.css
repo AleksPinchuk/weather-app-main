@@ -105,6 +105,7 @@ h1 {
   background: #262540;
   padding: 12px 12px 12px 40px; /* отступ под иконку */
   font-size: 20px;
+  color: #ffffff;
 }
 
 .search-box__input::placeholder {
