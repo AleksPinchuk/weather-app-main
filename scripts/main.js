@@ -44,6 +44,8 @@ document.querySelector('#search-form').addEventListener('submit', (event) => {
   const city = inputEl.value;
   console.log('Ищем погоду в:', city);
   inputEl.value = ''
+  // тут показываем что мы загружаем данные
+  loadingData()
   loadPage(city);
 });
 

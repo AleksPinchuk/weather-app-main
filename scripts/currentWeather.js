@@ -7,6 +7,8 @@ export async function renderCurrentWeather(location) {
     const current = await getCurrentWeather(location.latitude, location.longitude);
     console.log("Текущая погода:", current);
 
+    document.querySelector('.current-weather').classList.remove('loading')
+
     // Вставляем в разметку
     const placeEl = document.querySelector('.current-weather__city');
     if (placeEl) {
