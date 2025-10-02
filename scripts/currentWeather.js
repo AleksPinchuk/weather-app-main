@@ -12,7 +12,7 @@ export async function renderCurrentWeather(location) {
     // Вставляем в разметку
     const placeEl = document.querySelector('.current-weather__city');
     if (placeEl) {
-      placeEl.textContent = `${location.name}, ${location.country}`;
+      placeEl.textContent = !location.country ? `${location.name}` : `${location.name}, ${location.country}`;
     }
 
     const dateEl = document.querySelector('.current-weather__date')

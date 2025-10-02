@@ -54,10 +54,10 @@
       <div id="error"></div>
 
       <div class="weather-grid">
-        <section class="current-weather">
+        <section class="current-weather loading">
           <div class="current-weather__data">
-            <p class="current-weather__city">New York, USA</p>
-            <p class="current-weather__date">Monday, Sept 22, 2025</p>
+            <p class="current-weather__city"></p>
+            <p class="current-weather__date"></p>
           </div>
           <div class="current-weather-group">
             <img
@@ -65,7 +65,7 @@
               alt=""
               class="current-weather-image"
             />
-            <div class="current-weather__temp">20°</div>
+            <div class="current-weather__temp"></div>
           </div>
           <div class="current-weather-loading">
             <img
@@ -80,19 +80,19 @@
         <section class="indicators">
           <div class="indicator">
             <p class="indicator__label">Feels Like</p>
-            <span class="indicator__value feels_like">18°</span>
+            <span class="indicator__value feels_like"></span>
           </div>
           <div class="indicator">
             <p class="indicator__label">Humidity</p>
-            <span class="indicator__value humidity">46%</span>
+            <span class="indicator__value humidity"></span>
           </div>
           <div class="indicator">
             <p class="indicator__label">Wind</p>
-            <span class="indicator__value wind">14 km/h</span>
+            <span class="indicator__value wind"></span>
           </div>
           <div class="indicator">
             <p class="indicator__label">Precipitation</p>
-            <span class="indicator__value precipitation">0 mm</span>
+            <span class="indicator__value precipitation"></span>
           </div>
         </section>
 
@@ -100,18 +100,6 @@
           <h2 class="section-title">Daily forecast</h2>
           <div class="daily-forecast-cards">
             <!-- 7 карточек с днями -->
-            <div class="daily-forecast-card">
-              <p class="forecast-card__day">Tue</p>
-              <img
-                src="./assets/images/icon-rain.webp"
-                alt="rain"
-                class="forecast-card__icon"
-              />
-              <div class="forecast-card-temperature">
-                <p class="forecast-card__temp">20°</p>
-                <p class="forecast-card__temp-feel">14°</p>
-              </div>
-            </div>
             <!-- и так далее -->
           </div>
         </section>
@@ -120,21 +108,12 @@
           <div class="section-group">
             <h2 class="section-title">Hourly forecast</h2>
             <button class="day-select">
-              <span class="day-label">Tuesday</span>
+              <span class="day-label"></span>
               <img src="./assets/images/icon-dropdown.svg" alt="" />
             </button>
           </div>
           <div class="hourly-forecast-cards">
             <!-- 8 карточек с часами -->
-            <div class="hourly-forecast-card">
-              <img
-                src="./assets/images/icon-fog.webp"
-                alt="cloudy"
-                class="forecast-card__icon"
-              />
-              <p class="forecast-card__time">3 PM</p>
-              <p class="forecast-card__temp">20°</p>
-            </div>
             <!-- и так далее -->
           </div>
         </section>

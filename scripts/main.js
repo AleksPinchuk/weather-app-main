@@ -5,37 +5,51 @@ import { renderHourlyForecast } from './hourlyForecast.js';
 import { renderCurrentWeather } from './currentWeather.js';
 import { getCoordinates } from './api.js';
 import { loadingData } from './loading.js';
+import { detectUserLocation } from './location.js';
 
 // Хэндлер ошибки (вместо console.log можно выводить сообщение в UI)
 function renderError(message) {
-  const errorEl = document.querySelector('#error') 
+  const errorEl = document.querySelector('#error')
   errorEl.textContent = message;
 }
 
 // Основная загрузка страницы
-async function loadPage(city, date = dayjs().format('YYYY-MM-DD')) {
+async function loadPage(location, date = dayjs().format('YYYY-MM-DD')) {
   try {
-    // Получаем координаты
-    const location = await getCoordinates(city);
+    let locObj;
 
-    if (!location) {
-      renderError('Город не найден. Попробуйте другой.');
-      return;
+    // Если передана строка (город) → ищем координаты
+    if (typeof location === "string") {
+      locObj = await getCoordinates(location);
+      if (!locObj) {
+        renderError('Город не найден. Попробуйте другой.');
+        return;
+      }
+    }
+    // Если передан объект → используем его напрямую
+    else {
+      locObj = location;
     }
 
-    console.log(`Город: ${location.name}, ${location.country}`);
+    console.log(locObj)
+    console.log(`Загружаем погоду для: ${locObj.name || "Our location"}`);
 
     // Получаем данные о погоде и рендерим
     await Promise.all([
-      renderCurrentWeather(location),
-      renderDailyForecast(location),
-      renderHourlyForecast(location, date)
+      renderCurrentWeather(locObj),
+      renderDailyForecast(locObj),
+      renderHourlyForecast(locObj, date)
     ]);
 
   } catch (error) {
     renderError(`Ошибка загрузки данных: ${error.message || error}`);
   }
 }
+
+loadingData()
+
+// 🚀 Запуск при загрузке страницы
+document.addEventListener("DOMContentLoaded", detectUserLocation(loadPage));
 
 // Обрабатываем ввод данных в форму
 document.querySelector('#search-form').addEventListener('submit', (event) => {
@@ -48,4 +62,5 @@ document.querySelector('#search-form').addEventListener('submit', (event) => {
   loadingData()
   loadPage(city);
 });
+
 
