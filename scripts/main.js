@@ -6,6 +6,7 @@ import { renderCurrentWeather } from './currentWeather.js';
 import { getCoordinates } from './api.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
+import { renderDayDropdown } from './dropdown/daysDropdown.js';
 
 // Хэндлер ошибки (вместо console.log можно выводить сообщение в UI)
 function renderError(message) {
@@ -34,13 +35,15 @@ async function loadPage(location, date = dayjs().format('YYYY-MM-DD')) {
     console.log(locObj)
     console.log(`Загружаем погоду для: ${locObj.name || "Our location"}`);
 
+    // Обновляем dropdown с датами
+    renderDayDropdown(date, locObj);
+
     // Получаем данные о погоде и рендерим
     await Promise.all([
       renderCurrentWeather(locObj),
       renderDailyForecast(locObj),
-      renderHourlyForecast(locObj, date)
+      renderHourlyForecast(locObj, date),
     ]);
-
   } catch (error) {
     renderError(`Ошибка загрузки данных: ${error.message || error}`);
   }
@@ -48,7 +51,7 @@ async function loadPage(location, date = dayjs().format('YYYY-MM-DD')) {
 
 loadingData()
 
-// 🚀 Запуск при загрузке страницы
+// Запуск при загрузке страницы
 document.addEventListener("DOMContentLoaded", detectUserLocation(loadPage));
 
 // Обрабатываем ввод данных в форму
@@ -56,11 +59,31 @@ document.querySelector('#search-form').addEventListener('submit', (event) => {
   event.preventDefault(); // чтобы не было перезагрузки страницы
   const inputEl = document.querySelector('#city-input')
   const city = inputEl.value;
-  console.log('Ищем погоду в:', city);
-  inputEl.value = ''
-  // тут показываем что мы загружаем данные
-  loadingData()
-  loadPage(city);
+
+  if (inputEl.value.trim() !== '') {
+    console.log('Ищем погоду в:', city);
+    inputEl.value = ''
+    // тут показываем что мы загружаем данные
+    loadingData()
+    loadPage(city);
+  }
+
 });
+
+// переключение видимости dropdown
+document.addEventListener('click', (event) => {
+  const dropdown = document.querySelector('.day-dropdown');
+  const button = document.querySelector('.day-select');
+
+  // если клик по кнопке → переключаем меню
+  if (button.contains(event.target)) {
+    dropdown.classList.toggle('show');
+  } 
+  // если клик вне dropdown → закрываем
+  else if (!dropdown.contains(event.target)) {
+    dropdown.classList.remove('show');
+  }
+});
+
 
 

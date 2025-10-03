@@ -9,7 +9,7 @@ function createEmptyCards(count, className) {
   return result;
 }
 
-export function loadingData () {
+export function loadingData() {
   document.querySelector('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
   document.querySelector('.daily-forecast-cards').innerHTML = createEmptyCards(7, 'daily-forecast-card');
 
@@ -17,4 +17,9 @@ export function loadingData () {
   document.querySelectorAll('.indicator__value ').forEach((indicator) => indicator.textContent = '-')
 
   document.querySelector('.current-weather').classList.add('loading')
+}
+
+export function loadingHourlyForecast() {
+  document.querySelector('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
+  document.querySelector('.day-label').textContent = '-';
 }
