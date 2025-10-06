@@ -28,6 +28,7 @@ input,
 select,
 textarea {
   font: inherit;
+  color: inherit;
 }
 
 /* Убираем рамки и фон у кнопок по умолчанию */
@@ -35,6 +36,7 @@ button {
   border: none;
   background: none;
   cursor: pointer;
+  padding: 0;
 }
 
 /* Базовые настройки для body */

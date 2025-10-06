@@ -23,11 +23,34 @@
         alt="Weather App Logo "
         class="logo header__logo"
       />
-      <button class="header__units">
-        <img src="./assets/images/icon-units.svg" alt="" />
-        Units
-        <img src="./assets/images/icon-dropdown.svg" alt="" />
-      </button>
+      <div class="unit-dropdown">
+        <button class="header__units">
+          <img src="./assets/images/icon-units.svg" alt="" />
+          Units
+          <img src="./assets/images/icon-dropdown.svg" alt="" />
+        </button>
+        <div class="units-menu">
+          <button class="units-toggle">Switch to Imperial</button>
+
+          <p>Temperature</p>
+          <div class="units-group" data-type="temperature">
+            <button data-value="celsius">Celsius (°C)</button>
+            <button data-value="fahrenheit">Fahrenheit (°F)</button>
+          </div>
+
+          <p>Wind speed</p>
+          <div class="units-group" data-type="wind">
+            <button data-value="kmh">km/h</button>
+            <button data-value="mph">mph</button>
+          </div>
+
+          <p>Precipitation</p>
+          <div class="units-group" data-type="precip">
+            <button data-value="mm">Millimeters (mm)</button>
+            <button data-value="in">Inches (in)</button>
+    </div>
+
+        </div>
     </header>
 
     <main class="main">
@@ -107,7 +130,7 @@
         <section class="hourly-forecast">
           <div class="section-group">
             <h2 class="section-title">Hourly forecast</h2>
-            <div  class="day-select-wrapper">
+            <div class="day-select-wrapper">
               <button class="day-select">
                 <span class="day-label"></span>
                 <img src="./assets/images/icon-dropdown.svg" alt="" />

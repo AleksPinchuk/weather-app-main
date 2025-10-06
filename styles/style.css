@@ -363,7 +363,7 @@ h1 {
   padding: 12px;
   list-style: none;
   background: #262540;
-  border: 1px solid #3C3B5E;
+  border: 1px solid #3c3b5e;
   border-radius: 8px;
   display: none;
 }
@@ -388,6 +388,50 @@ h1 {
 }
 
 .day.active {
+  background-color: #2e2d5b;
+}
+
+.unit-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.units-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 214px;
+  margin: 10px 0 0;
+  padding: 12px;
+  list-style: none;
+  background: #262540;
+  border: 1px solid #3c3b5e;
+  border-radius: 8px;
+  z-index: 100;
+}
+
+.units-menu.show {
+  display: block;
+}
+
+.units-group {
+  margin: 8px 0;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.units-menu button {
+  padding: 4px 0;
+  border-radius: 6px;
+  background: #262540;
+  cursor: pointer;
+  width: 100%;
+  text-align: start;
+}
+
+.units-menu button.active {
   background-color: #2e2d5b;
 }
 

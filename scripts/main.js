@@ -7,6 +7,13 @@ import { getCoordinates } from './api.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
 import { renderDayDropdown } from './dropdown/daysDropdown.js';
+import { renderUnitsDropdown } from './dropdown/unitsDropdown.js';
+
+let units = {
+  temperature: "celsius",
+  wind: "kmh",
+  precip: "mm"
+};
 
 // Хэндлер ошибки (вместо console.log можно выводить сообщение в UI)
 function renderError(message) {
@@ -37,6 +44,7 @@ async function loadPage(location, date = dayjs().format('YYYY-MM-DD')) {
 
     // Обновляем dropdown с датами
     renderDayDropdown(date, locObj);
+    renderUnitsDropdown(units);
 
     // Получаем данные о погоде и рендерим
     await Promise.all([
@@ -70,7 +78,7 @@ document.querySelector('#search-form').addEventListener('submit', (event) => {
 
 });
 
-// переключение видимости dropdown
+// переключение видимости day dropdown
 document.addEventListener('click', (event) => {
   const dropdown = document.querySelector('.day-dropdown');
   const button = document.querySelector('.day-select');
@@ -78,12 +86,23 @@ document.addEventListener('click', (event) => {
   // если клик по кнопке → переключаем меню
   if (button.contains(event.target)) {
     dropdown.classList.toggle('show');
-  } 
+  }
   // если клик вне dropdown → закрываем
   else if (!dropdown.contains(event.target)) {
     dropdown.classList.remove('show');
   }
 });
 
+// Открытие / закрытие dropdown
+document.addEventListener('click', (event) => {
+  const unitsButton = document.querySelector('.header__units');
+  const unitsMenu = document.querySelector('.units-menu');
+
+  if (unitsButton.contains(event.target)) {
+    unitsMenu.classList.toggle('show');
+  } else if (!unitsMenu.contains(event.target)) {
+    unitsMenu.classList.remove('show');
+  }
+});
 
 
