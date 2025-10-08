@@ -42,12 +42,12 @@ export async function renderCurrentWeather(location, unitsObj) {
 
     const windEl = document.querySelector('.wind')
     if (windEl) {
-      windEl.textContent = `${current.windspeed.toFixed(0)} km/h`
+      windEl.textContent = `${current.windspeed.toFixed(0)} ${unitsObj.wind === 'kmh'? 'km/h' : 'mph'}`
     }
 
     const preciptionEl = document.querySelector('.precipitation')
     if (preciptionEl) {
-      preciptionEl.textContent = `${current.precipitation} mm`
+      preciptionEl.textContent = `${current.precipitation} ${unitsObj.precip}`
     }
 
 
