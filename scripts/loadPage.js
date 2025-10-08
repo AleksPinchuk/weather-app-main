@@ -3,7 +3,8 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { renderDailyForecast } from './dailyForecast.js';
 import { renderHourlyForecast } from './hourlyForecast.js';
 import { renderCurrentWeather } from './currentWeather.js';
-import { getCoordinates } from './api.js';
+import { getCoordinates, clearApiCache } from './api.js';
+import { appState } from './appState.js';
 import { renderDayDropdown } from './dropdown/daysDropdown.js';
 import { renderUnitsDropdown } from './dropdown/unitsDropdown.js';
 
@@ -25,6 +26,8 @@ export async function loadPage(location, unitsObj, date = dayjs().format('YYYY-M
         renderError('Город не найден. Попробуйте другой.');
         return;
       }
+      // Очищаем кэш при смене локации
+      clearApiCache();
     }
     // Если передан объект → используем его напрямую
     else {
@@ -34,9 +37,13 @@ export async function loadPage(location, unitsObj, date = dayjs().format('YYYY-M
     console.log(locObj)
     console.log(`Загружаем погоду для: ${locObj.name || "Our location"}`);
 
+    // Обновляем состояние приложения
+    appState.setLocation(locObj);
+    appState.saveToStorage();
+
     // Обновляем dropdown с датами
     renderDayDropdown(date, locObj, unitsObj);
-    renderUnitsDropdown(unitsObj, locObj);
+    renderUnitsDropdown();
 
     // Получаем данные о погоде и рендерим
     await Promise.all([

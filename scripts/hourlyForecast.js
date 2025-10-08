@@ -38,5 +38,5 @@ export async function renderHourlyForecast(location, selectedDate, unitsObj) {
 
   document.querySelector('.hourly-forecast-cards').innerHTML = hourlyForecastHTML;
   document.querySelector('.day-label').textContent = dayjs(selectedDate).format('dddd')
-  renderDayDropdown(selectedDate, location)
+  renderDayDropdown(selectedDate, location, unitsObj)
 }

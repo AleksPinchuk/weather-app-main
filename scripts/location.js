@@ -1,5 +1,6 @@
 import { loadingData } from './loading.js';
 import { loadPage } from './loadPage.js';
+import { appState } from './appState.js';
 
 export function detectUserLocation(unitsObj) {
   if (!navigator.geolocation) {

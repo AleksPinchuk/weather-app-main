@@ -1,6 +1,26 @@
 // Получаем данные с сервера
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
+// Простой кэш для API запросов
+const apiCache = new Map();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 минут
+
+// Функция для создания ключа кэша
+function createCacheKey(url) {
+  return url;
+}
+
+// Функция для проверки актуальности кэша
+function isCacheValid(timestamp) {
+  return Date.now() - timestamp < CACHE_DURATION;
+}
+
+// Функция для очистки кэша (вызывается при смене локации)
+export function clearApiCache() {
+  apiCache.clear();
+  console.log("Кэш API очищен");
+}
+
 // Получение координат города
 export async function getCoordinates(city) {
   const response = await fetch(
@@ -22,11 +42,36 @@ export async function getCoordinates(city) {
 
 // Получение текущей погоды
 export async function getCurrentWeather(lat, lon, unitsObj) {
+  // Защита от undefined unitsObj
+  if (!unitsObj) {
+    throw new Error("unitsObj is required for getCurrentWeather");
+  }
+  
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=apparent_temperature,relative_humidity_2m,precipitation&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
+  // Проверяем кэш
+  const cacheKey = createCacheKey(url);
+  const cachedData = apiCache.get(cacheKey);
+  
+  if (cachedData && isCacheValid(cachedData.timestamp)) {
+    console.log("Используем кэшированные данные для current weather");
+    return processCurrentWeatherData(cachedData.data);
+  }
 
   const response = await fetch(url);
   const data = await response.json();
+  
+  // Сохраняем в кэш
+  apiCache.set(cacheKey, {
+    data: data,
+    timestamp: Date.now()
+  });
 
+  return processCurrentWeatherData(data);
+}
+
+// Функция для обработки данных текущей погоды
+function processCurrentWeatherData(data) {
   if (!data.current_weather) {
     throw new Error("API не вернул current_weather");
   }
@@ -70,20 +115,60 @@ export async function getCurrentWeather(lat, lon, unitsObj) {
 
 // Прогноз на 7 дней
 export async function getDailyForecast(lat, lon, unitsObj) {
+  // Защита от undefined unitsObj
+  if (!unitsObj) {
+    throw new Error("unitsObj is required for getDailyForecast");
+  }
+  
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
+  // Проверяем кэш
+  const cacheKey = createCacheKey(url);
+  const cachedData = apiCache.get(cacheKey);
+  
+  if (cachedData && isCacheValid(cachedData.timestamp)) {
+    console.log("Используем кэшированные данные для daily forecast");
+    return cachedData.data.daily;
+  }
 
   const response = await fetch(url);
   const data = await response.json();
+  
+  // Сохраняем в кэш
+  apiCache.set(cacheKey, {
+    data: data,
+    timestamp: Date.now()
+  });
 
   return data.daily;
 }
 
 // Почасовой прогноз
 export async function getHourlyForecast(lat, lon, unitsObj) {
+  // Защита от undefined unitsObj
+  if (!unitsObj) {
+    throw new Error("unitsObj is required for getHourlyForecast");
+  }
+  
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,weathercode&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
+  // Проверяем кэш
+  const cacheKey = createCacheKey(url);
+  const cachedData = apiCache.get(cacheKey);
+  
+  if (cachedData && isCacheValid(cachedData.timestamp)) {
+    console.log("Используем кэшированные данные для hourly forecast");
+    return cachedData.data.hourly;
+  }
 
   const response = await fetch(url);
   const data = await response.json();
+  
+  // Сохраняем в кэш
+  apiCache.set(cacheKey, {
+    data: data,
+    timestamp: Date.now()
+  });
 
   return data.hourly;
 }

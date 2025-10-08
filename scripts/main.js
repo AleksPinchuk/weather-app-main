@@ -1,17 +1,24 @@
 import { loadPage } from './loadPage.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
-
-let units = {
-  temperature: "celsius",
-  wind: "kmh",
-  precip: "mm"
-};
+import { appState } from './appState.js';
 
 loadingData()
 
 // Запуск при загрузке страницы
-document.addEventListener("DOMContentLoaded",() => detectUserLocation(units));
+document.addEventListener("DOMContentLoaded",() => {
+  // Проверяем, есть ли сохраненная локация
+  const savedLocation = appState.getLocation();
+  
+  if (savedLocation) {
+    console.log("Восстанавливаем сохраненную локацию:", savedLocation);
+    loadingData();
+    loadPage(savedLocation, appState.getUnits());
+  } else {
+    // Если нет сохраненной локации, определяем местоположение пользователя
+    detectUserLocation(appState.getUnits());
+  }
+});
 
 // Обрабатываем ввод данных в форму
 document.querySelector('#search-form').addEventListener('submit', (event) => {
@@ -24,7 +31,7 @@ document.querySelector('#search-form').addEventListener('submit', (event) => {
     inputEl.value = ''
     // тут показываем что мы загружаем данные
     loadingData()
-    loadPage(city, units);
+    loadPage(city, appState.getUnits());
   }
 
 });
