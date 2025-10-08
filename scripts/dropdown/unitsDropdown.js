@@ -1,3 +1,5 @@
+import { loadPage } from "../loadPage.js";
+
 function updateActiveButtons(unitsObj) {
   document.querySelectorAll('.units-group').forEach(group => {
     const type = group.dataset.type;
@@ -12,7 +14,7 @@ function updateToggleText(unitsToggle, unitsObj) {
   unitsToggle.textContent = isMetric ? "Switch to Imperial" : "Switch to Metric";
 }
 
-export function renderUnitsDropdown(unitsObj) {
+export function renderUnitsDropdown(unitsObj, locObj) {
   const unitsToggle = document.querySelector('.units-toggle');
 
   // Первичная инициализация
@@ -24,7 +26,7 @@ export function renderUnitsDropdown(unitsObj) {
     const isMetric = unitsObj.temperature === "celsius";
 
     unitsObj = isMetric
-      ? { temperature: "fahrenheit", wind: "mph", precip: "in" }
+      ? { temperature: "fahrenheit", wind: "mph", precip: "inch" }
       : { temperature: "celsius", wind: "kmh", precip: "mm" };
 
     updateToggleText(unitsToggle, unitsObj);
@@ -32,6 +34,7 @@ export function renderUnitsDropdown(unitsObj) {
 
     console.log("Текущие единицы:", unitsObj);
     // render/loadPage(unitsObj)
+    loadPage(locObj, unitsObj)
   });
 
   // Обработка клика по отдельным кнопкам внутри групп
@@ -47,6 +50,7 @@ export function renderUnitsDropdown(unitsObj) {
       console.log(`Выбрано: ${type} = ${value}`);
       console.log("Текущие единицы:", unitsObj);
       // render/loadPage(unitsObj)
+      loadPage(locObj, unitsObj)
     });
   });
 }

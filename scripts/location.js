@@ -1,6 +1,7 @@
 import { loadingData } from './loading.js';
+import { loadPage } from './loadPage.js';
 
-export function detectUserLocation(fun) {
+export function detectUserLocation(unitsObj) {
   if (!navigator.geolocation) {
     console.log("Geolocation не поддерживается браузером");
     return;
@@ -21,11 +22,11 @@ export function detectUserLocation(fun) {
       console.log("Определено местоположение:", location);
 
       loadingData();
-      fun(location); // сразу передаём объект
+      loadPage(location, unitsObj); // сразу передаём объект
     },
     (err) => {
       console.log("Пользователь отказал в доступе к геолокации", err);
-      fun('Suka')
+      loadPage('Suka', unitsObj)
     }
   );
 }

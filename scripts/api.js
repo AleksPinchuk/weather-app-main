@@ -15,37 +15,63 @@ export async function getCoordinates(city) {
   return {
     name: data.results[0].name,
     country: data.results[0].country,
-    latitude: data.results[0].latitude,
-    longitude: data.results[0].longitude,
+    latitude: data.results[0].latitude.toFixed(6),
+    longitude: data.results[0].longitude.toFixed(6),
   };
 };
 
 // Получение текущей погоды
-export async function getCurrentWeather(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=apparent_temperature,relative_humidity_2m,precipitation&timezone=auto`;
-  
+export async function getCurrentWeather(lat, lon, unitsObj) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true&hourly=apparent_temperature,relative_humidity_2m,precipitation&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
   const response = await fetch(url);
   const data = await response.json();
 
-  const currentTime = dayjs(data.current_weather.time);
+  if (!data.current_weather) {
+    throw new Error("API не вернул current_weather");
+  }
 
-  // Находим индекс ближайшего времени в hourly
-  const index = data.hourly.time.findIndex((t) => 
+  const current = data.current_weather;
+  const currentTime = dayjs(current.time);
+
+  // Если hourly нет — возвращаем только current_weather
+  if (!data.hourly || !data.hourly.time) {
+    console.warn("⚠️ Нет блока hourly в ответе API:", data);
+    return {
+      ...current,
+      feels_like: current.temperature,
+      humidity: null,
+      precipitation: null,
+    };
+  }
+
+  const index = data.hourly.time.findIndex((t) =>
     dayjs(t).isSame(currentTime, "hour")
   );
 
+  // Если индекс не найден — просто используем текущие значения
+  if (index === -1) {
+    console.warn("⚠️ Не найден индекс текущего часа в hourly:", currentTime);
+    return {
+      ...current,
+      feels_like: current.temperature,
+      humidity: null,
+      precipitation: null,
+    };
+  }
+
   return {
-    ...data.current_weather,
+    ...current,
     feels_like: data.hourly.apparent_temperature[index],
     humidity: data.hourly.relative_humidity_2m[index],
-    precipitation: data.hourly.precipitation[index]
+    precipitation: data.hourly.precipitation[index],
   };
 }
 
 // Прогноз на 7 дней
-export async function getDailyForecast(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
-  
+export async function getDailyForecast(lat, lon, unitsObj) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
   const response = await fetch(url);
   const data = await response.json();
 
@@ -53,14 +79,15 @@ export async function getDailyForecast(lat, lon) {
 }
 
 // Почасовой прогноз
-export async function getHourlyForecast(lat, lon) {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,weathercode&timezone=auto`;
-  
+export async function getHourlyForecast(lat, lon, unitsObj) {
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,weathercode&temperature_unit=${unitsObj.temperature}&wind_speed_unit=${unitsObj.wind}&precipitation_unit=${unitsObj.precip}&timezone=auto`;
+
   const response = await fetch(url);
   const data = await response.json();
 
   return data.hourly;
 }
+
 
 // Получаем ссылку на иконку погоды
 export function getWeatherImage(weathercode) {

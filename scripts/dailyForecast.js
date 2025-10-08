@@ -1,9 +1,9 @@
 import { getDailyForecast, getWeatherImage} from './api.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-export async function renderDailyForecast(location) {
+export async function renderDailyForecast(location, unitsObj) {
 
-  const dailyForecast = await getDailyForecast(location.latitude, location.longitude)
+  const dailyForecast = await getDailyForecast(location.latitude, location.longitude, unitsObj)
 
   let dailyForecastHTML = "";
 

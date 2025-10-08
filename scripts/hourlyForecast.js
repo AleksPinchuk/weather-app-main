@@ -2,8 +2,8 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { getHourlyForecast, getWeatherImage } from './api.js';
 import { renderDayDropdown } from './dropdown/daysDropdown.js';
 
-export async function renderHourlyForecast(location, selectedDate) {
-  const hourlyForecast = await getHourlyForecast(location.latitude, location.longitude);
+export async function renderHourlyForecast(location, selectedDate, unitsObj) {
+  const hourlyForecast = await getHourlyForecast(location.latitude, location.longitude, unitsObj);
 
   const targetHours = ["03", "06", "09", "12", "15", "18", "21", "00"];
 

@@ -2,7 +2,7 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { loadingHourlyForecast } from '../loading.js';
 import { renderHourlyForecast } from '../hourlyForecast.js';
 
-export function renderDayDropdown(selectedDate, location) {
+export function renderDayDropdown(selectedDate, location, unitObj) {
   const dropdown = document.querySelector('.day-dropdown');
   dropdown.innerHTML = '';
 
@@ -22,7 +22,7 @@ export function renderDayDropdown(selectedDate, location) {
       document.querySelector('.day-dropdown').classList.remove('show');
       
       loadingHourlyForecast(); // показываем "загрузка..."
-      renderHourlyForecast(location, li.dataset.date); // грузим с новой датой
+      renderHourlyForecast(location, li.dataset.date, unitObj); // грузим с новой датой
     });
 
     dropdown.appendChild(li);

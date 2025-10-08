@@ -1,10 +1,10 @@
 import { getCurrentWeather, getWeatherImage } from './api.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
-export async function renderCurrentWeather(location) {
+export async function renderCurrentWeather(location, unitsObj) {
   try {
     //Текущая погода
-    const current = await getCurrentWeather(location.latitude, location.longitude);
+    const current = await getCurrentWeather(location.latitude, location.longitude, unitsObj);
     console.log("Текущая погода:", current);
 
     document.querySelector('.current-weather').classList.remove('loading')
