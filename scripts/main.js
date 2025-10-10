@@ -2,11 +2,15 @@ import { loadPage } from './loadPage.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
 import { appState } from './appState.js';
+import { initSearchDropdown } from './dropdown/searchDropdown.js';
 
 loadingData()
 
 // Запуск при загрузке страницы
 document.addEventListener("DOMContentLoaded",() => {
+  // Инициализируем search dropdown
+  initSearchDropdown();
+  
   // Проверяем, есть ли сохраненная локация
   const savedLocation = appState.getLocation();
   
@@ -20,21 +24,7 @@ document.addEventListener("DOMContentLoaded",() => {
   }
 });
 
-// Обрабатываем ввод данных в форму
-document.querySelector('#search-form').addEventListener('submit', (event) => {
-  event.preventDefault(); // чтобы не было перезагрузки страницы
-  const inputEl = document.querySelector('#city-input')
-  const city = inputEl.value;
-
-  if (inputEl.value.trim() !== '') {
-    console.log('Ищем погоду в:', city);
-    inputEl.value = ''
-    // тут показываем что мы загружаем данные
-    loadingData()
-    loadPage(city, appState.getUnits());
-  }
-
-});
+// Обработка формы теперь происходит в searchDropdown.js
 
 // Открытие и закрытие дропдоуна
 document.addEventListener('click', (event) => {

@@ -366,15 +366,12 @@ h1 {
   border: 1px solid #3c3b5e;
   border-radius: 8px;
   display: none;
+  box-shadow: 0 8px 16px rgba(2, 1, 44, 0.3);
 }
 
 .day-dropdown li {
   padding: 8px 12px;
   cursor: pointer;
-}
-
-.day-dropdown li:hover {
-  background: #f0f0f0;
 }
 
 .day-dropdown.show {
@@ -403,12 +400,18 @@ h1 {
   right: 0;
   width: 214px;
   margin: 10px 0 0;
-  padding: 12px;
+  padding: 6px 8px;
   list-style: none;
   background: #262540;
   border: 1px solid #3c3b5e;
   border-radius: 8px;
   z-index: 100;
+  font-size: 16px;
+  box-shadow: 0 8px 16px rgba(2, 1, 44, 0.3);
+}
+
+.divider {
+  border: 1px solid #2e2d5b;
 }
 
 .units-menu.show {
@@ -416,23 +419,67 @@ h1 {
 }
 
 .units-group {
-  margin: 8px 0;
   display: flex;
-  gap: 6px;
+  gap: 4px;
   flex-wrap: wrap;
 }
 
 .units-menu button {
-  padding: 4px 0;
+  padding: 10px 8px;
   border-radius: 6px;
   background: #262540;
   cursor: pointer;
   width: 100%;
   text-align: start;
+  height: 39px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.units-menu img {
+  height: 17px;
+  width: 14px;
+  display: none;
+}
+
+.units-menu p {
+  color: #acacb7;
+  font-size: 14px;
+  padding: 6px 8px 0px;
+  height: 23px;
+  margin-bottom: 8px;
 }
 
 .units-menu button.active {
   background-color: #2e2d5b;
+}
+
+button.active img {
+  display: block;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  margin: 10px 0 0;
+  padding: 8px;
+  list-style: none;
+  background: #262540;
+  border: 1px solid #3c3b5e;
+  border-radius: 8px;
+  display: none;
+  box-shadow: 0 8px 16px rgba(2, 1, 44, 0.3);
+}
+
+.search-dropdown.show {
+  display: block;
+}
+
+.search-dropdown li {
+  padding: 10px 8px;
+  cursor: pointer;
 }
 
 @media (max-width: 1024px) {
