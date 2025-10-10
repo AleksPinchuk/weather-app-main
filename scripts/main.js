@@ -1,4 +1,4 @@
-import { loadPage, renderApiError } from './loadPage.js';
+import { loadPage } from './loadPage.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
 import { appState } from './appState.js';
@@ -34,13 +34,13 @@ document.addEventListener('click', (event) => {
   const unitsButton = $('.header__units');
   const unitsMenu = $('.units-menu');
 
-  if (dayButton && dayButton.contains(event.target)) {
+  if (dayButton?.contains(event.target)) {
     dayMenu.classList.toggle('show');
   } else if (dayMenu && !dayMenu.contains(event.target)) {
     dayMenu.classList.remove('show');
   }
 
-  if (unitsButton && unitsButton.contains(event.target)) {
+  if (unitsButton?.contains(event.target)) {
     unitsMenu.classList.toggle('show');
   } else if (unitsMenu && !unitsMenu.contains(event.target)) {
     unitsMenu.classList.remove('show');

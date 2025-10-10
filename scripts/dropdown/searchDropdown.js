@@ -1,7 +1,7 @@
 import { loadPage } from '../loadPage.js';
 import { loadingData } from '../loading.js';
 import { appState } from '../appState.js';
-import { debounce, $, $$ } from '../utils.js';
+import { debounce, $ } from '../utils.js';
 
 const input = $('#city-input');
 const form = $('#search-form');

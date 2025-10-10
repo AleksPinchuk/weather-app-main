@@ -7,7 +7,7 @@ import { getCoordinates, clearApiCache } from './api.js';
 import { appState } from './appState.js';
 import { renderDayDropdown } from './dropdown/daysDropdown.js';
 import { renderUnitsDropdown } from './dropdown/unitsDropdown.js';
-import { $, $$ } from './utils.js';
+import { $ } from './utils.js';
 
 
 // Очистка всех ошибок и восстановление интерфейса
