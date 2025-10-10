@@ -1,25 +1,17 @@
-// Отбражение загрузки данных
-function createEmptyCards(count, className) {
-  let result = '';
+import { createEmptyCards, $, $$ } from './utils.js';
 
-  for (let i = 0; i < count; i++) {
-    result += `<div class="${className}"></div>`;
-  }
-
-  return result;
-}
-
+// Отображение загрузки данных
 export function loadingData() {
-  document.querySelector('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
-  document.querySelector('.daily-forecast-cards').innerHTML = createEmptyCards(7, 'daily-forecast-card');
+  $('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
+  $('.daily-forecast-cards').innerHTML = createEmptyCards(7, 'daily-forecast-card');
 
-  document.querySelector('.day-label').textContent = '-';
-  document.querySelectorAll('.indicator__value ').forEach((indicator) => indicator.textContent = '-')
+  $('.day-label').textContent = '-';
+  $$('.indicator__value').forEach((indicator) => indicator.textContent = '-');
 
-  document.querySelector('.current-weather').classList.add('loading')
+  $('.current-weather').classList.add('loading');
 }
 
 export function loadingHourlyForecast() {
-  document.querySelector('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
-  document.querySelector('.day-label').textContent = '-';
+  $('.hourly-forecast-cards').innerHTML = createEmptyCards(8, 'hourly-forecast-card');
+  $('.day-label').textContent = '-';
 }

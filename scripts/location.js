@@ -1,5 +1,5 @@
 import { loadingData } from './loading.js';
-import { loadPage } from './loadPage.js';
+import { loadPage, renderApiError } from './loadPage.js';
 import { appState } from './appState.js';
 
 export function detectUserLocation(unitsObj) {
@@ -27,7 +27,8 @@ export function detectUserLocation(unitsObj) {
     },
     (err) => {
       console.log("Пользователь отказал в доступе к геолокации", err);
-      loadPage('Suka', unitsObj)
+      // Показываем ошибку геолокации
+      renderApiError(`Geolocation error: ${err.message || 'Location access denied'}`);
     }
   );
 }

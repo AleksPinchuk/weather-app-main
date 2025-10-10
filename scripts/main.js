@@ -1,8 +1,9 @@
-import { loadPage } from './loadPage.js';
+import { loadPage, renderApiError } from './loadPage.js';
 import { loadingData } from './loading.js';
 import { detectUserLocation } from './location.js';
 import { appState } from './appState.js';
 import { initSearchDropdown } from './dropdown/searchDropdown.js';
+import { $ } from './utils.js';
 
 loadingData()
 
@@ -28,10 +29,10 @@ document.addEventListener("DOMContentLoaded",() => {
 
 // Открытие и закрытие дропдоуна
 document.addEventListener('click', (event) => {
-  const dayButton = document.querySelector('.day-select');
-  const dayMenu = document.querySelector('.day-dropdown');
-  const unitsButton = document.querySelector('.header__units');
-  const unitsMenu = document.querySelector('.units-menu');
+  const dayButton = $('.day-select');
+  const dayMenu = $('.day-dropdown');
+  const unitsButton = $('.header__units');
+  const unitsMenu = $('.units-menu');
 
   if (dayButton && dayButton.contains(event.target)) {
     dayMenu.classList.toggle('show');
@@ -45,3 +46,4 @@ document.addEventListener('click', (event) => {
     unitsMenu.classList.remove('show');
   }
 });
+

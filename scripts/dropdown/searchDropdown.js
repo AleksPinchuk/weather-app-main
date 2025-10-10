@@ -1,25 +1,15 @@
 import { loadPage } from '../loadPage.js';
 import { loadingData } from '../loading.js';
 import { appState } from '../appState.js';
+import { debounce, $, $$ } from '../utils.js';
 
-const input = document.querySelector('#city-input');
-const form = document.querySelector('#search-form');
-const dropdown = document.querySelector('.search-dropdown');
+const input = $('#city-input');
+const form = $('#search-form');
+const dropdown = $('.search-dropdown');
 
 const HISTORY_KEY = 'recentCities';
 
-// Debounce функция для предотвращения частых API запросов
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
-}
+// Debounce функция теперь импортируется из utils.js
 
 // Сохраняем город в историю (не более 4)
 function saveToHistory(city) {
@@ -55,9 +45,19 @@ function renderDropdown(items, isHistory = false) {
     return;
   }
 
+  // Получаем текущий город из состояния приложения
+  const currentLocation = appState.getLocation();
+  const currentCityName = currentLocation ? `${currentLocation.name}, ${currentLocation.country}` : null;
+
   currentItems.forEach((item, index) => {
     const li = document.createElement('li');
     li.className = 'search-dropdown__item';
+    
+    // Добавляем класс active для текущего города
+    if (currentCityName && item === currentCityName) {
+      li.classList.add('active');
+    }
+    
     li.textContent = item;
     li.dataset.index = index;
     
@@ -89,6 +89,7 @@ function updateSelection() {
       item.classList.add('selected');
     } else {
       item.classList.remove('selected');
+      // НЕ удаляем класс 'active' - он должен оставаться для текущего города
     }
   });
 }
@@ -98,6 +99,12 @@ async function fetchSuggestions(query) {
   try {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=4&language=en&format=json`;
     const res = await fetch(url);
+    
+    if (!res.ok) {
+      console.error(`API Error: HTTP ${res.status}`);
+      return [];
+    }
+    
     const data = await res.json();
     
     if (!data.results) return [];
@@ -105,6 +112,7 @@ async function fetchSuggestions(query) {
     return data.results.map(r => `${r.name}, ${r.country}`);
   } catch (error) {
     console.error('Ошибка получения предложений:', error);
+    // Не показываем ошибку пользователю для автодополнения - просто возвращаем пустой массив
     return [];
   }
 }
@@ -215,6 +223,18 @@ export function initSearchDropdown() {
           searchCity(city);
         }
         break;
+    }
+  });
+
+  // Подписываемся на изменения локации для обновления active класса
+  appState.subscribe('location', () => {
+    // Если dropdown открыт, обновляем его для отображения нового active элемента
+    if (dropdown.classList.contains('show')) {
+      const currentValue = input.value.trim();
+      if (!currentValue) {
+        // Если поле пустое, показываем историю с обновленным active
+        renderDropdown(getHistory(), true);
+      }
     }
   });
 

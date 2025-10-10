@@ -1,11 +1,12 @@
 import { loadPage } from "../loadPage.js";
 import { appState } from "../appState.js";
+import { debounce, $, $$ } from "../utils.js";
 
 // Хранилище для обработчиков событий
 let eventHandlersAttached = false;
 
 function updateActiveButtons(unitsObj) {
-  document.querySelectorAll('.units-group').forEach(group => {
+  $$('.units-group').forEach(group => {
     const type = group.dataset.type;
     group.querySelectorAll('button').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.value === unitsObj[type]);
@@ -16,19 +17,6 @@ function updateActiveButtons(unitsObj) {
 function updateToggleText(unitsToggle, unitsObj) {
   const isMetric = unitsObj.temperature === "celsius";
   unitsToggle.textContent = isMetric ? "Switch to Imperial" : "Switch to Metric";
-}
-
-// Debounce функция для предотвращения частых вызовов API
-function debounce(func, wait) {
-  let timeout;
-  return function executedFunction(...args) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
 }
 
 // Создаем debounced версию loadPage
@@ -46,7 +34,7 @@ const debouncedLoadPage = debounce(() => {
 }, 300); // 300ms задержка
 
 export function renderUnitsDropdown() {
-  const unitsToggle = document.querySelector('.units-toggle');
+  const unitsToggle = $('.units-toggle');
   const currentUnits = appState.getUnits();
 
   // Первичная инициализация
@@ -86,7 +74,7 @@ export function renderUnitsDropdown() {
     });
 
     // Обработка клика по отдельным кнопкам внутри групп
-    document.querySelectorAll('.units-group button').forEach(btn => {
+    $$('.units-group button').forEach(btn => {
       btn.addEventListener('click', () => {
         const type = btn.parentElement.dataset.type;
         const value = btn.dataset.value;

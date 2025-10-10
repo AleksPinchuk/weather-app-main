@@ -1,5 +1,6 @@
 import { getDailyForecast, getWeatherImage} from './api.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
+import { $ } from './utils.js';
 
 export async function renderDailyForecast(location, unitsObj) {
 
@@ -29,7 +30,7 @@ export async function renderDailyForecast(location, unitsObj) {
             </div>
     `
 
-    document.querySelector('.daily-forecast-cards').innerHTML = dailyForecastHTML;
+    $('.daily-forecast-cards').innerHTML = dailyForecastHTML;
   })
 }
 

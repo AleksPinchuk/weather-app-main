@@ -23,21 +23,33 @@ export function clearApiCache() {
 
 // Получение координат города
 export async function getCoordinates(city) {
-  const response = await fetch(
-    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
-  );
-  const data = await response.json();
+  try {
+    const response = await fetch(
+      `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1`
+    );
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
+    
+    const data = await response.json();
 
-  if (!data.results || data.results.length === 0) {
-    throw new Error("Город не найден");
+    if (!data.results || data.results.length === 0) {
+      throw new Error("Город не найден");
+    }
+
+    return {
+      name: data.results[0].name,
+      country: data.results[0].country,
+      latitude: data.results[0].latitude.toFixed(6),
+      longitude: data.results[0].longitude.toFixed(6),
+    };
+  } catch (error) {
+    if (error.name === 'TypeError' && error.message.includes('fetch')) {
+      throw new Error('Network error: Unable to connect to geocoding service');
+    }
+    throw error;
   }
-
-  return {
-    name: data.results[0].name,
-    country: data.results[0].country,
-    latitude: data.results[0].latitude.toFixed(6),
-    longitude: data.results[0].longitude.toFixed(6),
-  };
 };
 
 // Получение текущей погоды
@@ -59,6 +71,11 @@ export async function getCurrentWeather(lat, lon, unitsObj) {
   }
 
   const response = await fetch(url);
+  
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+  
   const data = await response.json();
   
   // Сохраняем в кэш
@@ -132,6 +149,11 @@ export async function getDailyForecast(lat, lon, unitsObj) {
   }
 
   const response = await fetch(url);
+  
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+  
   const data = await response.json();
   
   // Сохраняем в кэш
@@ -162,6 +184,11 @@ export async function getHourlyForecast(lat, lon, unitsObj) {
   }
 
   const response = await fetch(url);
+  
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+  
   const data = await response.json();
   
   // Сохраняем в кэш

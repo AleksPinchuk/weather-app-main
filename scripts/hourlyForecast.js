@@ -1,6 +1,7 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { getHourlyForecast, getWeatherImage } from './api.js';
 import { renderDayDropdown } from './dropdown/daysDropdown.js';
+import { $ } from './utils.js';
 
 export async function renderHourlyForecast(location, selectedDate, unitsObj) {
   const hourlyForecast = await getHourlyForecast(location.latitude, location.longitude, unitsObj);
@@ -36,7 +37,7 @@ export async function renderHourlyForecast(location, selectedDate, unitsObj) {
     `;
   });
 
-  document.querySelector('.hourly-forecast-cards').innerHTML = hourlyForecastHTML;
-  document.querySelector('.day-label').textContent = dayjs(selectedDate).format('dddd')
+  $('.hourly-forecast-cards').innerHTML = hourlyForecastHTML;
+  $('.day-label').textContent = dayjs(selectedDate).format('dddd')
   renderDayDropdown(selectedDate, location, unitsObj)
 }

@@ -67,6 +67,8 @@
         </div>
     </header>
 
+    <div class="api-error"></div>
+
     <main class="main">
       <h1 class="main__title">How's the sky looking today?</h1>
 
@@ -85,14 +87,13 @@
             placeholder="Search for a place..."
           />
           <ul class="search-dropdown">
-            <li>London</li>
-            <li>London</li>
           </ul>
         </div>
         <button class="search-box__btn" type="submit">Search</button>
       </form>
 
-      <div id="error"></div>
+      <div id="error" class="error">
+      </div>
 
       <div class="weather-grid">
         <section class="current-weather loading">
