@@ -1,102 +1,162 @@
-# Frontend Mentor - Weather app
+# 🌤 Weather App
 
-![Design preview for the Weather app coding challenge](./preview.jpg)
+This project is a responsive **weather forecast web application** built as a solution to the [Frontend Mentor Weather App challenge](https://www.frontendmentor.io/challenges/weather-app-K1FhddVm49).
+It allows users to search for a city, view detailed current weather conditions, and explore daily and hourly forecasts powered by the [Open-Meteo API](https://open-meteo.com/).
 
-## Welcome! 👋
+## Table of contents
 
-Thanks for checking out this front-end coding challenge.
+- [Overview](#overview)
+  - [Features](#features)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [Built with](#built-with)
+- [Architecture](#architecture)
+- [How It Works](#how-it-works)
+- [What I Learned](#what-i-learned)
+- [Future Improvements](#future-improvements)
+- [Author](#author)
 
-[Frontend Mentor](https://www.frontendmentor.io) challenges help you improve your coding skills by building realistic projects.
 
-**To do this challenge, you need a good understanding of HTML, CSS and JavaScript.**
+**Note: Delete this note and update the table of contents based on what sections you keep.**
 
-## The challenge
+## Overview
 
-Your challenge is to build out this weather app using the [Open-Meteo API](https://open-meteo.com/) and get it looking as close to the design as possible.
+### Features
 
-You can use any tools you like to help you complete the challenge. So if you've got something you'd like to practice, feel free to give it a go.
-
-Your users should be able to:
+Users should be able to:
 
 - Search for weather information by entering a location in the search bar
 - View current weather conditions including temperature, weather icon, and location details
 - See additional weather metrics like "feels like" temperature, humidity percentage, wind speed, and precipitation amounts
 - Browse a 7-day weather forecast with daily high/low temperatures and weather icons
 - View an hourly forecast showing temperature changes throughout the day
-- Switch between different days of the week using the day selector in the hourly forecast section
+- Switch between different days of the week using the day selector in the hourly forecast sectionС
 - Toggle between Imperial and Metric measurement units via the units dropdown 
 - Switch between specific temperature units (Celsius and Fahrenheit) and measurement units for wind speed (km/h and mph) and precipitation (millimeters) via the units dropdown
 - View the optimal layout for the interface depending on their device's screen size
 - See hover and focus states for all interactive elements on the page
 
-Want some support on the challenge? [Join our community](https://www.frontendmentor.io/community) and ask questions in the **#help** channel.
+### Screenshot
 
-## Where to find everything
+![](./screenshot.jpg)
 
-Your task is to build out the project to the designs inside the `/design` folder. You will find both a mobile and a desktop version of the design. 
+### Links
 
-The designs are in JPG static format. Using JPGs will mean that you'll need to use your best judgment for styles such as `font-size`, `padding` and `margin`. 
+* **Live Site:** [Your Live URL here](https://your-live-url.com)
+* **Repository:** [Weather App Github](https://github.com/AleksPinchuk/weather-app-main)
 
-If you would like the Figma design file to gain experience using professional tools and build more accurate projects faster, you can [subscribe as a PRO member](https://www.frontendmentor.io/pro).
 
-All the required assets for this project are in the `/assets` folder. The images are already exported for the correct screen size and optimized.
+### Built with
 
-We also include variable and static font files for the required fonts for this project. You can choose to either link to Google Fonts or use the local font files to host the fonts yourself. Note that we've removed the static font files for the font weights that aren't needed for this project.
+* **HTML5** — semantic structure
+* **SCSS (CSS)** — modular and responsive styles
+* **JavaScript (ES Modules)** — for app logic and data flow
+* **Open-Meteo API** — weather data source
+* **Day.js** — for date formatting and calculations
+* **Fetch API** — for async API calls
 
-There is also a `style-guide.md` file containing the information you'll need, such as color palette and fonts.
 
-## Building your project
+## Architecture
 
-Feel free to use any workflow that you feel comfortable with. Below is a suggested process, but do not feel like you need to follow these steps:
+The application is structured around modular JavaScript files:
 
-1. Initialize your project as a public repository on [GitHub](https://github.com/). Creating a repo will make it easier to share your code with the community if you need help. If you're not sure how to do this, [have a read-through of this Try Git resource](https://try.github.io/).
-2. Configure your repository to publish your code to a web address. This will also be useful if you need some help during a challenge as you can share the URL for your project with your repo URL. There are a number of ways to do this, and we provide some recommendations below.
-3. Look through the designs to start planning out how you'll tackle the project. This step is crucial to help you think ahead for CSS classes to create reusable styles.
-4. Before adding any styles, structure your content with HTML. Writing your HTML first can help focus your attention on creating well-structured content.
-5. Write out the base styles for your project, including general content styles, such as `font-family` and `font-size`.
-6. Start adding styles to the top of the page and work down. Only move on to the next section once you're happy you've completed the area you're working on.
+```
+src/scripts
+├── api.js              # Fetches weather and location data
+├── main.js             # Main entry, handles user input and dropdowns
+├── appState.js         # Stores key application data
+├── loadPage.js         # Main function that renders the app
+├── dropdown/
+│   ├── daysDropdown.js   # Renders day selection dropdown
+│   └── unitsDropdown.js  # Renders units selection dropdown
+│   └── searchDropdown.js # Renders search dropdown
+├── currentWeather.js   # Displays current weather
+├── dailyForecast.js    # Displays 7-day forecast
+├── hourlyForecast.js   # Displays hourly forecast
+├── location.js         # Function for getting user location
+└── utils.js            # debounce for API requests, $ and $$ helper functions for DOM queries
+```
 
-## Deploying your project
+### Data Fetching
 
-As mentioned above, there are many ways to host your project for free. Our recommend hosts are:
+Data is fetched from **Open-Meteo API**:
 
-- [GitHub Pages](https://pages.github.com/)
-- [Vercel](https://vercel.com/)
-- [Netlify](https://www.netlify.com/)
+```js
+const url = `https://api.open-meteo.com/v1/forecast?
+  latitude=${lat}&longitude=${lon}
+  &hourly=temperature_2m,weathercode
+  &temperature_unit=${units.temperature}
+  &wind_speed_unit=${units.wind}
+  &precipitation_unit=${units.precip}
+  &timezone=auto`;
+```
 
-You can host your site using one of these solutions or any of our other trusted providers. [Read more about our recommended and trusted hosts](https://medium.com/frontend-mentor/frontend-mentor-trusted-hosting-providers-bf000dfebe).
+### Rendering
 
-## Create a custom `README.md`
+All rendering functions (`renderCurrentWeather`, `renderDailyForecast`, `renderHourlyForecast`) are **asynchronous** and are called from `loadPage()`.
+The UI updates instantly when:
 
-We strongly recommend overwriting this `README.md` with a custom one. We've provided a template inside the [`README-template.md`](./README-template.md) file in this starter code.
+* A new city is selected
+* The user switches units
+* A different day is chosen
 
-The template provides a guide for what to add. A custom `README` will help you explain your project and reflect on your learnings. Please feel free to edit our template as much as you like.
+---
 
-Once you've added your information to the template, delete this file and rename the `README-template.md` file to `README.md`. That will make it show up as your repository's README file.
+## How It Works
 
-## Submitting your solution
+1. On page load, the app tries to **detect the user’s location** or uses a default one.
+2. The `loadPage()` function fetches data and renders:
+   * Current weather
+   * Daily forecast
+   * Hourly forecast
+3. Dropdowns allow users to change **units** and **selected date**, automatically triggering data reload.
+4. The app reuses `appState` and updates UI efficiently without reloading the entire page.
 
-Submit your solution on the platform for the rest of the community to see. Follow our ["Complete guide to submitting solutions"](https://medium.com/frontend-mentor/a-complete-guide-to-submitting-solutions-on-frontend-mentor-ac6384162248) for tips on how to do this.
+---
 
-Remember, if you're looking for feedback on your solution, be sure to ask questions when submitting it. The more specific and detailed you are with your questions, the higher the chance you'll get valuable feedback from the community.
+## What I Learned
 
-## Sharing your solution
+During this project, I:
 
-There are multiple places you can share your solution:
+* Improved understanding of **modular JavaScript architecture**
+* Learned to structure a small app without frameworks using ES modules
+* Practiced **working with external APIs (Open-Meteo)**
+* Implemented dropdown menus with **click-outside closing**
+* Learned how to manage a **shared app state** between components
 
-1. Share your solution page in the **#finished-projects** channel of our [community](https://www.frontendmentor.io/community). 
-2. Tweet [@frontendmentor](https://twitter.com/frontendmentor) and mention **@frontendmentor**, including the repo and live URLs in the tweet. We'd love to take a look at what you've built and help share it around.
-3. Share your solution on other social channels like LinkedIn.
-4. Blog about your experience building your project. Writing about your workflow, technical choices, and talking through your code is a brilliant way to reinforce what you've learned. Great platforms to write on are [dev.to](https://dev.to/), [Hashnode](https://hashnode.com/), and [CodeNewbie](https://community.codenewbie.org/).
+Example of modular function structure:
 
-We provide templates to help you share your solution once you've submitted it on the platform. Please do edit them and include specific questions when you're looking for feedback. 
+```js
+export function renderUnitsDropdown() {
+  const toggle = document.querySelector('.units-toggle');
+  const currentUnits = appState.getUnits();
 
-The more specific you are with your questions the more likely it is that another member of the community will give you feedback.
+  // Initial UI setup
+  toggle.textContent = currentUnits.temperature === "celsius"
+    ? "Switch to Imperial"
+    : "Switch to Metric";
 
-## Got feedback for us?
+  // Toggle between Metric ↔ Imperial
+  toggle.addEventListener('click', () => {
+    const isMetric = appState.getUnits().temperature === "celsius";
 
-We love receiving feedback! We're always looking to improve our challenges and our platform. So if you have anything you'd like to mention, please email hi[at]frontendmentor[dot]io.
+    appState.setUnits(
+      isMetric
+        ? { temperature: "fahrenheit", wind: "mph", precip: "inch" }
+        : { temperature: "celsius", wind: "kmh", precip: "mm" }
+    );
 
-This challenge is completely free. Please share it with anyone who will find it useful for practice.
+    // Update UI text
+    toggle.textContent = isMetric ? "Switch to Metric" : "Switch to Imperial";
 
-**Have fun building!** 🚀
+    // Reload data with debounce (300ms)
+    debounce(() => loadPage(appState.getLocation(), appState.getUnits()), 300)();
+  });
+}
+```
+
+## Author
+
+* **Name:** Aleksandr Pinchuk
+* **GitHub:** [@AleksPinchuk](https://github.com/AleksPinchuk)
+
