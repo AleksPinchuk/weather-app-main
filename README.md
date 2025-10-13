@@ -15,9 +15,6 @@ It allows users to search for a city, view detailed current weather conditions, 
 - [What I Learned](#what-i-learned)
 - [Author](#author)
 
-
-**Note: Delete this note and update the table of contents based on what sections you keep.**
-
 ## Overview
 
 ### Features
@@ -66,9 +63,10 @@ src/scripts
 ├── appState.js         # Stores key application data
 ├── loadPage.js         # Main function that renders the app
 ├── dropdown/
-│   ├── daysDropdown.js   # Renders day selection dropdown
-│   └── unitsDropdown.js  # Renders units selection dropdown
-│   └── searchDropdown.js # Renders search dropdown
+│   ├── daysDropdown.js     # Renders day selection dropdown
+│   └── unitsDropdown.js    # Renders units selection dropdown
+│   └── searchDropdown.js   # Renders search dropdown
+│
 ├── currentWeather.js   # Displays current weather
 ├── dailyForecast.js    # Displays 7-day forecast
 ├── hourlyForecast.js   # Displays hourly forecast
