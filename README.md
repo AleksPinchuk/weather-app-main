@@ -13,7 +13,6 @@ It allows users to search for a city, view detailed current weather conditions, 
 - [Architecture](#architecture)
 - [How It Works](#how-it-works)
 - [What I Learned](#what-i-learned)
-- [Future Improvements](#future-improvements)
 - [Author](#author)
 
 
@@ -38,7 +37,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./screenshot.jpg)
+![Design preview for the Weather app coding challenge](./preview.jpg)
 
 ### Links
 
