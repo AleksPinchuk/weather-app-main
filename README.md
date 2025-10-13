@@ -38,7 +38,7 @@ Users should be able to:
 
 ### Links
 
-* **Live Site:** [Your Live URL here](https://your-live-url.com)
+* **Live Site:** [Weather App](https://alekspinchuk.github.io/weather-app/)
 * **Repository:** [Weather App Github](https://github.com/AleksPinchuk/weather-app-main)
 
 
