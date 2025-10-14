@@ -70,11 +70,19 @@ export function renderApiError(errorMessage = 'Something went wrong') {
       const currentUnits = appState.getUnits();
 
       if (currentLocation) {
+        // Если локация уже есть, просто загружаем данные
         loadPage(currentLocation, currentUnits);
       } else {
-        // Если нет сохраненной локации, пробуем определить геолокацию
+        // Пытаемся получить геолокацию один раз
         import('./location.js').then(({ detectUserLocation }) => {
-          detectUserLocation(currentUnits);
+          detectUserLocation(currentUnits, (success) => {
+            if (success) {
+              console.log("Геолокация получена, страница загружена");
+            } else {
+              // Если геолокацию получить не удалось — показываем ручной поиск города
+              renderError("Location access denied. You can search for the city you want manually.");
+            }
+          });
         });
       }
     });

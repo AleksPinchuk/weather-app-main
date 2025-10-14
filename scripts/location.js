@@ -1,36 +1,32 @@
 import { loadingData } from './loading.js';
 import { loadPage, renderApiError } from './loadPage.js';
-import { appState } from './appState.js';
 
-export function detectUserLocation(unitsObj) {
+export function detectUserLocation(unitsObj, callback) {
   if (!navigator.geolocation) {
     console.log("Geolocation не поддерживается браузером");
+    if (callback) callback(false); // говорим, что геолокацию получить не удалось
     return;
   }
 
   navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      const latitude = position.coords.latitude;
-      const longitude = position.coords.longitude;
-
+    (position) => {
       const location = {
         name: "Our location",
-        latitude,
-        longitude,
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude,
         country: ""
       };
 
       console.log("Определено местоположение:", location);
-
       loadingData();
-      loadPage(location, unitsObj); // сразу передаём объект
+      loadPage(location, unitsObj);
+
+      if (callback) callback(true); // геолокация успешна
     },
     (err) => {
       console.log("Пользователь отказал в доступе к геолокации", err);
-      // Показываем ошибку геолокации
       renderApiError(`Geolocation error: ${err.message || 'Location access denied'}`);
+      if (callback) callback(false); // геолокацию получить не удалось
     }
   );
 }
-
-
