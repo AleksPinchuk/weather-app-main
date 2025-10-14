@@ -1,4 +1,4 @@
-import { getDailyForecast, getWeatherImage} from './api.js'
+import { getDailyForecast, getWeatherImage, getWeatherGradient} from './api.js'
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { $ } from './utils.js';
 
@@ -16,7 +16,8 @@ export async function renderDailyForecast(location, unitsObj) {
     const weatherCode = dailyForecast.weathercode[index];
 
     dailyForecastHTML += `
-                <div class="daily-forecast-card">
+                <div class="daily-forecast-card"
+                style="background: ${getWeatherGradient(weatherCode)}">
               <p class="forecast-card__day">${dayjs(date).format('ddd')}</p>
               <img
                 src="${getWeatherImage(weatherCode)}"
